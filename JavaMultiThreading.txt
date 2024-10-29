@@ -1,0 +1,46 @@
+public class Main {
+
+    static class MyRunnable implements Runnable {  // Made it static to avoid issues with the outer class
+        private String threadName;
+
+        public MyRunnable(String name) {
+            this.threadName = name;
+        }
+        
+        @Override
+        public void run() {
+            for (int i = 1; i <= 5; i++) {
+                System.out.println(threadName + ": " + i);
+                try {
+                    Thread.sleep(1000); // Sleep for 1 second
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        // Create two runnable objects
+        MyRunnable runnable1 = new MyRunnable("Thread 12");
+        MyRunnable runnable2 = new MyRunnable("Thread 2");
+
+        // Create two threads
+         Thread thread1 = new Thread(runnable1);
+        Thread thread2 = new Thread(runnable2);
+
+        // Start both threads
+        thread1.start();
+        thread2.start();
+
+        // Main thread does something
+        for (int i = 1; i <= 5; i++) {
+            System.out.println("Main Thread: " + i);
+            try {
+                Thread.sleep(500); // Sleep for 0.5 second
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
